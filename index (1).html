@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prueba Técnica IT — Duvan Zárate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f3fb;
+      --surface:   #ffffff;
+      --surface2:  #ede9f8;
+      --border:    #d6cef0;
+      --grad-a:    #6d4fc2;
+      --grad-b:    #8b6dd4;
+      --accent:    #7c5cbf;
+      --accent-lt: #a98fe0;
+      --text-h:    #2b1d5c;
+      --text-b:    #3d3060;
+      --text-s:    #6b5e99;
+      --text-li:   #8a7ab5;
+      --ok-bg:     #edf7f1; --ok-tx: #276142; --ok-bd: #b3ddc4;
+      --warn-bg:   #fdf6e3; --warn-tx: #7a5c00; --warn-bd: #e8d08a;
+      --risk-bg:   #fdeef0; --risk-tx: #8b1a2e; --risk-bd: #f0b8c0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-b);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 2rem;
+      padding: 1.4rem 1.75rem;
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(109,79,194,.08);
+    }
+    .logo {
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 17px; flex-shrink: 0;
+      letter-spacing: -.5px;
+    }
+    .header-text h1 { font-size: 21px; font-weight: 700; color: var(--text-h); }
+    .header-text p  { font-size: 13px; color: var(--text-s); margin-top: 3px; }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(109,79,194,.07);
+    }
+    .section-header {
+      background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+      padding: 1.1rem 1.75rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-header .icon {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.18);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .section-header h2 { font-size: 14.5px; font-weight: 600; color: #fff; line-height: 1.4; }
+
+    .section-body { padding: 1.5rem 1.75rem; }
+
+    /* ── Q BLOCKS ── */
+    .q-block {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--surface2);
+    }
+    .q-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .question {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+      margin-bottom: .6rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .question::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-lt);
+      flex-shrink: 0;
+    }
+
+    .answer { font-size: 14px; line-height: 1.85; color: var(--text-b); }
+    .answer p { margin-bottom: .65rem; }
+    .answer p:last-child { margin-bottom: 0; }
+    .answer strong { color: var(--text-h); font-weight: 600; }
+
+    /* ── BADGES ── */
+    .badge-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: .7rem; }
+    .badge {
+      background: var(--surface2);
+      color: var(--accent);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 11px; border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .badge.ok   { background: var(--ok-bg);   color: var(--ok-tx);   border-color: var(--ok-bd); }
+    .badge.warn { background: var(--warn-bg);  color: var(--warn-tx); border-color: var(--warn-bd); }
+    .badge.risk { background: var(--risk-bg);  color: var(--risk-tx); border-color: var(--risk-bd); }
+
+    /* ── STEP LIST ── */
+    .step-list { list-style: none; padding: 0; margin-top: .65rem; }
+    .step-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: .6rem;
+      font-size: 13.5px; color: var(--text-b); line-height: 1.72;
+    }
+    .step-list li::before {
+      content: attr(data-n);
+      min-width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+      color: #fff; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px; flex-shrink: 0;
+    }
+
+    /* ── PRIORITY CARDS ── */
+    .priority-row {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: .85rem;
+    }
+    @media (max-width: 580px) { .priority-row { grid-template-columns: 1fr; } }
+    .priority-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem; text-align: center;
+    }
+    .priority-card .num { font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .priority-card .label { font-size: 11px; color: var(--text-s); margin-top: 4px; font-weight: 500; }
+    .priority-card .title { font-size: 13px; font-weight: 600; color: var(--text-h); margin-top: 8px; }
+    .priority-card .desc  { font-size: 12px; color: var(--text-b); margin-top: 6px; line-height: 1.6; }
+
+    /* ── SUB-STEP (numbered inside priority) ── */
+    .mini-steps { margin-top: .5rem; text-align: left; }
+    .mini-steps li {
+      font-size: 12px; color: var(--text-b); line-height: 1.6;
+      padding: .3rem 0; border-bottom: 1px solid var(--border);
+      list-style: none; display: flex; gap: 8px; align-items: flex-start;
+    }
+    .mini-steps li:last-child { border-bottom: none; }
+    .mini-steps li .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-lt); flex-shrink: 0; margin-top: 6px;
+    }
+
+    /* ── PAZ Y SALVO FLOW ── */
+    .flow-row {
+      display: flex; flex-wrap: wrap; gap: 0; margin-top: 1rem; align-items: stretch;
+    }
+    .flow-step {
+      flex: 1; min-width: 120px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem .85rem;
+      text-align: center;
+      position: relative;
+    }
+    .flow-step .fs-icon { font-size: 20px; }
+    .flow-step .fs-title { font-size: 12px; font-weight: 600; color: var(--text-h); margin-top: 5px; }
+    .flow-step .fs-desc  { font-size: 11px; color: var(--text-s); margin-top: 4px; line-height: 1.5; }
+    .flow-arrow {
+      display: flex; align-items: center; padding: 0 4px;
+      color: var(--accent-lt); font-size: 18px; font-weight: 300;
+    }
+    @media (max-width: 620px) {
+      .flow-row { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); align-self: center; }
+    }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: var(--surface2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: .85rem 1rem; margin-top: .85rem;
+      font-size: 13.5px; color: var(--text-b); line-height: 1.75;
+    }
+    .info-box strong { color: var(--text-h); }
+
+    /* ── FOOTER ── */
+    .footer { text-align: center; margin-top: 2rem; font-size: 12px; color: var(--text-li); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ENCABEZADO -->
+  <div class="header">
+    <div class="logo">wn</div>
+    <div class="header-text">
+      <h1>Prueba Técnica — Duvan Zárate</h1>
+      <p>Paranice · Área de Tecnología e Infraestructura IT</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN 1 — CONTROL DE ACTIVOS
+  ══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon">🖥️</div>
+      <h2>Control de Activos · 79 dispositivos (80% Apple / 20% Windows)</h2>
+    </div>
+    <div class="section-body">
+
+      <!-- P1 -->
+      <div class="q-block">
+        <div class="question">¿Qué stock de seguridad implementarías y por qué?</div>
+        <div class="answer">
+          <p>Lo primero sería implementar un <strong>MDM centralizado</strong> que permita gestionar los equipos de forma remota: asignar políticas, revisar el estado del dispositivo o eliminar información en caso de pérdida o retiro de un colaborador. Para los equipos Apple, la herramienta más utilizada y robusta es <strong>Jamf Pro</strong>. Para los equipos Windows, se trabajaría con <strong>imágenes preestablecidas</strong> con configuraciones de seguridad base ya definidas.</p>
+          <p>Antes de implementar cualquier herramienta adicional, es clave responder dos preguntas: <strong>¿existen políticas de seguridad en la empresa?</strong> y <strong>¿los equipos son fijos en oficina o portátiles que salen a la calle?</strong> No aplica lo mismo para un colaborador que trabaja en campo que para uno que solo usa el computador en su puesto de trabajo; el nivel de exposición es completamente diferente.</p>
+          <p>Con ese contexto claro se define la criticidad de la información y se implementan las capas necesarias: <strong>antivirus, bloqueo de puertos USB, filtrado web y controles de fuga de información</strong>, siempre proporcionales al riesgo real del negocio.</p>
+          <div class="badge-row">
+            <span class="badge">Jamf Pro (macOS / iOS)</span>
+            <span class="badge">Imágenes preestablecidas (Windows)</span>
+            <span class="badge">Antivirus corporativo</span>
+            <span class="badge">Bloqueo de puertos USB</span>
+            <span class="badge">Filtrado web</span>
+            <span class="badge warn">Validar políticas existentes primero</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="q-block">
+        <div class="question">¿Cómo diseñarías la seguridad de accesos para Google Workspace, Slack, SAP, ClickUp y otras herramientas críticas?</div>
+        <div class="answer">
+          <p>La <strong>autenticación multifactor (MFA)</strong> sería la primera y más importante medida de defensa. Sin MFA, cualquier credencial robada es una puerta abierta.</p>
+          <p>Luego se configurarían restricciones específicas por plataforma. En <strong>Google Workspace</strong>, por ejemplo, se bloquearían inicios de sesión desde fuera de Colombia y se activarían alertas ante logins inusuales: horarios fuera de lo normal, IPs desconocidas o dispositivos nuevos. Cada herramienta tiene sus propios controles y hay que aprovecharlos al máximo.</p>
+          <p>Sin embargo, la tecnología sola no es suficiente. <strong>Las personas siempre son el blanco más fácil</strong>: el phishing y la ingeniería social son los vectores más comunes. Por eso es igualmente importante generar <strong>capacitaciones periódicas en sitio</strong> para que el equipo identifique intentos de engaño y sepa cómo reaccionar.</p>
+          <div class="badge-row">
+            <span class="badge">MFA obligatorio en todas las herramientas</span>
+            <span class="badge">Bloqueo de logins fuera de Colombia</span>
+            <span class="badge">Alertas de accesos inusuales</span>
+            <span class="badge ok">Capacitaciones anti-phishing periódicas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="q-block">
+        <div class="question">¿Qué solución de VPN implementarías? ¿VPN tradicional o Zero Trust?</div>
+        <div class="answer">
+          <p>Antes de decidir, hay que hacerse las preguntas correctas: <strong>¿necesitamos comunicarnos con otra sede remota? ¿Acceder a recursos internos desde afuera?</strong> Si es así, una VPN tiene sentido — y si la red ya tiene un firewall en sede, ese mismo equipo puede levantarla sin costos adicionales.</p>
+          <p>Analizando el contexto de Paranice, que usa plataformas SaaS como Google Workspace, Slack y ClickUp, <strong>estas herramientas no requieren estar en la red de la oficina para funcionar</strong>. En ese escenario, una VPN tradicional agrega complejidad sin agregar valor real.</p>
+          <p>Lo que sí tiene mucho más sentido es aplicar una <strong>política de Zero Trust</strong>: nunca confiar, siempre verificar. Exigir credenciales siempre, doble factor en cada acceso y validar cada inicio de sesión inusual. Es la postura de seguridad más efectiva para empresas que viven en la nube.</p>
+          <div class="badge-row">
+            <span class="badge ok">Zero Trust — recomendado para el contexto SaaS</span>
+            <span class="badge">MFA en cada acceso</span>
+            <span class="badge warn">VPN tradicional — evaluar solo si hay red interna crítica</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="q-block">
+        <div class="question">Si hoy no hay stock de computadores y entra alguien mañana, ¿cómo lo manejarías?</div>
+        <div class="answer">
+          <p>Que no haya stock para un ingreso es señal de una <strong>gestión de activos deficiente</strong>. Lo correcto es mantener siempre entre un <strong>5% y 10% de equipos de respaldo</strong> para cubrir situaciones fortuitas. Ese colchón debe ser parte de la política de inventario.</p>
+          <p>Pero si ya ocurrió y mañana entra alguien sin equipo, las soluciones irían en este orden:</p>
+          <ul class="step-list">
+            <li data-n="1"><strong>Acelerar la compra con el equipo de compras</strong>, buscando entrega urgente el mismo día.</li>
+            <li data-n="2"><strong>Aprovechar el tiempo de inducción:</strong> mientras llega el equipo, el colaborador puede estar con RRHH, sistemas y su área — tiempo que igual hay que invertir.</li>
+            <li data-n="3"><strong>Equipo prestado como último recurso:</strong> usar el equipo de un colaborador que no asistió ese día o un equipo móvil de respaldo hasta que llegue el definitivo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- P5 -->
+      <div class="q-block">
+        <div class="question">¿Qué riesgos tecnológicos crees que tiene hoy una empresa como Paranice?</div>
+        <div class="answer">
+          <p>A mi criterio, Paranice enfrenta principalmente dos grandes riesgos:</p>
+          <p>El primero es la <strong>fuga de información</strong>. Si no existen políticas de seguridad establecidas — control de accesos, cierre oportuno de cuentas en retiros, restricciones de descarga o compartición — la información confidencial queda expuesta sin que nadie lo note.</p>
+          <p>El segundo es el <strong>phishing y robo de cuentas</strong>. Al manejar plataformas de correo y colaboración todo el tiempo, los colaboradores están constantemente expuestos. Un solo clic en el lugar equivocado puede comprometer una cuenta y con ella todas las herramientas conectadas.</p>
+          <div class="badge-row">
+            <span class="badge risk">Fuga de información por falta de políticas</span>
+            <span class="badge risk">Phishing y robo de credenciales</span>
+            <span class="badge risk">Offboarding sin protocolo formal</span>
+            <span class="badge warn">Accesos sin MFA activo</span>
+            <span class="badge warn">Inventario de activos desactualizado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P6 — PRIORIDADES -->
+      <div class="q-block">
+        <div class="question">¿Cuáles serían tus 3 prioridades durante los primeros 30 días? Comparte el plan de trabajo.</div>
+        <div class="answer">
+          <div class="priority-row">
+
+            <!-- PRIORIDAD 1 -->
+            <div class="priority-card">
+              <div class="num">01</div>
+              <div class="label">Semana 1 – 2</div>
+              <div class="title">Diagnóstico y mapeo de activos</div>
+              <ul class="mini-steps">
+                <li><span class="dot"></span>Inventario completo: PCs, portátiles, tablets, celulares, switches y access points — inicialmente en Excel y luego migrado a GLPI o el ERP de la empresa.</li>
+                <li><span class="dot"></span>Cada activo queda asociado al colaborador que lo usa.</li>
+                <li><span class="dot"></span>Mapeo de aplicativos: quién administra Slack, Workspace, ClickUp y demás; quién tiene acceso y quién no.</li>
+                <li><span class="dot"></span>Con esta información se sientan las bases para tomar decisiones de seguridad informadas.</li>
+              </ul>
+            </div>
+
+            <!-- PRIORIDAD 2 -->
+            <div class="priority-card">
+              <div class="num">02</div>
+              <div class="label">Semana 2 – 3</div>
+              <div class="title">Aplicar medidas de seguridad</div>
+              <ul class="mini-steps">
+                <li><span class="dot"></span>Con el inventario levantado, se identifican los riesgos críticos y se priorizan las acciones.</li>
+                <li><span class="dot"></span>Activar MFA en el 100% de las cuentas institucionales.</li>
+                <li><span class="dot"></span>Configurar restricciones y alertas en cada aplicativo según lo que permita la plataforma.</li>
+                <li><span class="dot"></span>Enrolar todos los dispositivos en el MDM y aplicar políticas base.</li>
+              </ul>
+            </div>
+
+            <!-- PRIORIDAD 3 -->
+            <div class="priority-card">
+              <div class="num">03</div>
+              <div class="label">Semana 3 – 4</div>
+              <div class="title">Protocolos de onboarding y offboarding</div>
+              <ul class="mini-steps">
+                <li><span class="dot"></span>Documentar y formalizar el proceso de ingreso y retiro de colaboradores.</li>
+                <li><span class="dot"></span>Crear el formato de paz y salvo con las áreas involucradas.</li>
+                <li><span class="dot"></span>Definir SLAs claros y comunicarlos a RRHH y liderazgo.</li>
+                <li><span class="dot"></span>Evaluar la automatización del flujo en la plataforma que ya use la empresa.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN 2 — SEGURIDAD Y OFFBOARDING
+  ══════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon">🔐</div>
+      <h2>Seguridad y Offboarding — caso práctico</h2>
+    </div>
+    <div class="section-body">
+
+      <!-- RIESGOS -->
+      <div class="q-block">
+        <div class="question">¿Qué riesgos existen?</div>
+        <div class="answer">
+          <p>Este es un caso común: una renuncia inesperada con múltiples accesos activos y sin notificación a IT. Los riesgos están directamente asociados a la <strong>información e imagen de la empresa</strong>:</p>
+          <div class="badge-row" style="margin-bottom:.85rem;">
+            <span class="badge risk">Gmail corporativo — puede enviar mensajes a nombre de la empresa para obtener beneficios maliciosamente</span>
+            <span class="badge risk">Drive con piezas de marca — puede descargar archivos y activos exclusivos</span>
+            <span class="badge risk">Slack — acceso a conversaciones internas e información estratégica</span>
+            <span class="badge risk">Adobe CC — uso de licencias pagas para proyectos personales</span>
+            <span class="badge risk">MacBook y celular — extracción de datos almacenados localmente</span>
+          </div>
+          <p>En resumen, con acceso activo el colaborador saliente puede obtener y explotar información confidencial de clientes, creatividades y procesos internos para beneficio propio, afectando tanto la operación como la reputación de Paranice.</p>
+        </div>
+      </div>
+
+      <!-- PROTOCOLO -->
+      <div class="q-block">
+        <div class="question">¿Qué protocolo implementarías para retiros?</div>
+        <div class="answer">
+          <p>El protocolo debe cubrir dos frentes de forma simultánea: los <strong>activos físicos</strong> y los <strong>accesos digitales</strong>.</p>
+          <p>En cuanto a los activos, la directriz debe ser clara desde el contrato: <strong>para poder dejar el cargo, el colaborador debe entregar todos los activos asignados</strong> — computador y celular corporativo — antes de que se procese su salida.</p>
+          <p>Con ese frente cubierto, se procede con los accesos digitales:</p>
+          <ul class="step-list">
+            <li data-n="1"><strong>Suspender (no eliminar) la cuenta de Google Workspace</strong> — esto bloquea de golpe Gmail, Drive, Meet, Calendar y todos los servicios federados por SSO, incluido Slack. La cuenta se suspende y no se elimina hasta recibir retroalimentación del jefe directo sobre qué hacer con la información almacenada: ¿pasarla a otra persona o hacer un backup para archivo?</li>
+            <li data-n="2"><strong>Revocar acceso en Slack y demás aplicativos</strong> conectados, forzando cierre de sesión en todos los dispositivos activos.</li>
+            <li data-n="3"><strong>Licencias de software:</strong> desligar la licencia del correo del colaborador y dejarla en estado disponible para reasignación. Si la herramienta era de uso compartido (no personal), cambiar la contraseña de inmediato.</li>
+            <li data-n="4"><strong>Adobe Creative Cloud:</strong> desactivar o reasignar la licencia desde Adobe Admin Console.</li>
+            <li data-n="5"><strong>Documentar todo:</strong> registrar fecha y hora de cada acción y notificar formalmente a RRHH y al área comercial que los accesos fueron revocados.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ÁREAS Y PAZ Y SALVO -->
+      <div class="q-block">
+        <div class="question">¿Qué áreas deben participar y cómo estructurarías un proceso rápido y ligero para que esto no vuelva a suceder?</div>
+        <div class="answer">
+          <p>El proceso estructurado que implementaría es el <strong>Paz y Salvo</strong>, un documento formal que el colaborador debe completar antes de acceder a su liquidación y último sueldo. Esta condición debe estar estipulada desde el contrato para tener respaldo legal.</p>
+          <p>El Paz y Salvo involucra las áreas fundamentales de la empresa y funciona así:</p>
+          <ul class="step-list">
+            <li data-n="1">El colaborador informa su renuncia a <strong>Recursos Humanos</strong> y a su <strong>jefe inmediato</strong>.</li>
+            <li data-n="2">Una vez aceptada la carta, RRHH notifica de inmediato a <strong>Sistemas</strong> y <strong>Tesorería</strong> para que inicien sus procesos de cierre en paralelo.</li>
+            <li data-n="3">El colaborador completa el Paz y Salvo el <strong>mismo día de su retiro</strong>, obteniendo las firmas de cada área responsable.</li>
+            <li data-n="4">Con todas las firmas reunidas, el <strong>jefe inmediato</strong> da constancia de que el proceso fue completado correctamente.</li>
+            <li data-n="5">El documento vuelve a <strong>RRHH</strong>, que con eso puede cerrar el contrato y liberar la liquidación sin inconvenientes.</li>
+          </ul>
+
+          <!-- FLUJO VISUAL -->
+          <div class="flow-row">
+            <div class="flow-step">
+              <div class="fs-icon">👤</div>
+              <div class="fs-title">Colaborador</div>
+              <div class="fs-desc">Notifica renuncia a RRHH y jefe directo</div>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-step">
+              <div class="fs-icon">🧑‍💼</div>
+              <div class="fs-title">RRHH</div>
+              <div class="fs-desc">Acepta carta y activa a Sistemas y Tesorería</div>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-step">
+              <div class="fs-icon">💻</div>
+              <div class="fs-title">Sistemas</div>
+              <div class="fs-desc">Cierra accesos y recibe activos físicos</div>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-step">
+              <div class="fs-icon">💰</div>
+              <div class="fs-title">Tesorería</div>
+              <div class="fs-desc">Verifica pendientes financieros</div>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-step">
+              <div class="fs-icon">✅</div>
+              <div class="fs-title">Paz y Salvo</div>
+              <div class="fs-desc">Firma del jefe inmediato y liquidación liberada</div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            💡 <strong>Automatización:</strong> además del proceso presencial, se puede utilizar la plataforma que ya tenga la empresa (ClickUp, el ERP u otra) para digitalizar el Paz y Salvo y hacer seguimiento en tiempo real del estado de desvinculación de cada colaborador. Así no depende de un voz a voz — queda trazado, auditado y visible para todas las áreas involucradas.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">Prueba Técnica · Duvan Zárate · Paranice · IT 2026</div>
+</div>
+</body>
+</html>
